@@ -1,0 +1,13 @@
+data:
+  restart: always
+  build: ../dockerMySQL
+  image:
+  ports: 
+    - "3306"
+
+multiapi:
+  restart: always
+  build: .
+  image:
+  links:
+    - data
