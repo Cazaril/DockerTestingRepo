@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Credits of this code to @Rock_Neurotiko
 from os import getenv
-import sys
+import sys, time
 from sh import asadmin
 
 rss = {"url": "https://github.com/FIWARE-TMForum/business-ecosystem-rss.git",
@@ -32,6 +32,10 @@ text = text.replace("config.callbackURL=", "config.callbackURL={}/fiware-rss/cal
 with open("/etc/default/rss/oauth.properties", "w") as f:
     f.write(text)
 
+#time.sleep(30 )
 
-asadmin("deploy", "--force", "true" if force else "false", "--contextroot", rss.get('root'), "--name", rss.get('root'), rss.get('war'))
+print("starting")
+asadmin("start-domain", "--verbose")
+print("started")
+asadmin("deploy", "--force", "false", "--contextroot", rss.get('root'), "--name", rss.get('root'), rss.get('war'))
 
