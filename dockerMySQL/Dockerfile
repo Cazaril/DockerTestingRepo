@@ -1,28 +1,9 @@
 FROM mysql:latest
 
-RUN apt-get update
+RUN apt-get update && apt-get install -y python2.7 python-pip
 
-# Create DATABASE
-RUN mysql -u root -ptoor -e CREATE DATABASE IF NOT EXISTS DSPRODUCTCATALOG2;
+RUN pip install sh
 
-# Create DATABASE
-RUN mysql -u root -ptoor -e CREATE DATABASE IF NOT EXISTS DSPRODUCTORDERING;
-
-# Create DATABASE
-RUN mysql -u root -ptoor -e CREATE DATABASE IF NOT EXISTS DSPRODUCTINVENTORY;
-
-# Create DATABASE
-RUN mysql -u root -ptoor -e CREATE DATABASE IF NOT EXISTS DSPARTYMANAGEMENT;
-
-# Create DATABASE
-RUN mysql -u root -ptoor -e CREATE DATABASE IF NOT EXISTS DSBILLINGMANAGEMENT;
-
-# Create DATABASE
-RUN mysql -u root -ptoor -e CREATE DATABASE IF NOT EXISTS DSCUSTOMER;
-
-# Create DATABASE
-RUN mysql -u root -ptoor -e CREATE DATABASE IF NOT EXISTS DSUSAGEMANAGEMENT;
-
-RUN mysql -u root -ptoor -e CREATE DATABASE IF NOT EXISTS RSS;
+ENV MYSQL_ROOT_PASSWORD=toor
 
 EXPOSE 3306

@@ -1,13 +1,10 @@
-data:
-  restart: always
-  build: ../dockerMySQL
-  image:
+db:
+  image: postgres:latest
   ports: 
     - "3306"
 
 multiapi:
-  restart: always
-  build: .
-  image:
+  image: 
   links:
-    - data
+    - db
+
