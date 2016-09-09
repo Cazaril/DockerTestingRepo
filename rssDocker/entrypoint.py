@@ -1,13 +1,13 @@
 #!/usr/bin/env python
 # Credits of this code to @Rock_Neurotiko
 from os import getenv
-import sys, time
-from sh import asadmin
+import sys, time, socket
+from sh import asadmin, cat
 
 rss = {"url": "https://github.com/FIWARE-TMForum/business-ecosystem-rss.git",
        "branch": "develop",
        "bbdd": "RSS",
-       "war": "fiware-rss/target/DSRevenueSharing.war",
+       "war": "./fiware-rss/target/DSRevenueSharing.war",
        "name": "rss",
        "root": "DSRevenueSharing"}
 
@@ -32,10 +32,22 @@ text = text.replace("config.callbackURL=", "config.callbackURL={}/fiware-rss/cal
 with open("/etc/default/rss/oauth.properties", "w") as f:
     f.write(text)
 
-#time.sleep(30 )
+while True:
+    try:
+        print("Intentado conectar:.... ")
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        host = 'db'
+        port = 3306
+        sock.connect((host, int(port)))
+        sock.close()
+        break
+    except:
+        continue
 
-print("starting")
-asadmin("start-domain", "--verbose")
-print("started")
+print("\nstarted\n")
+#try:
 asadmin("deploy", "--force", "false", "--contextroot", rss.get('root'), "--name", rss.get('root'), rss.get('war'))
-
+#except:
+#    pass
+#with open("{}/glassfish/domains/domain1/logs/server.log".format(getenv("GLASSFISH_HOME"))) as f:
+#    print(f.read())

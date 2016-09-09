@@ -1,0 +1,3 @@
+asadmin start-domain
+
+python entrypoint.py

@@ -1,4 +1,4 @@
-rss_db:
+db:
     image: mysql:latest
     volumes:
         - /var/lib/mysql
@@ -10,9 +10,11 @@ rss:
     image: rss
     ports:
         - "9999:8080"
+        - "4848:4848"
+        - "8181:8181"
     links:
-        - rss_db
+        - db
     environment:
         - RSS_CLIENT_ID=POTORRO
         - RSS_SECRET=PLATANO
-        - RSS_URL=FUNCIONAPUTA
+        - RSS_URL=http://db:9999
