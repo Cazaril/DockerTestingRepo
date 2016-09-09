@@ -1,0 +1,9 @@
+mysql:
+    image: mysql
+    environment:
+        - MYSQL_ROOT_PASSWORD=toor
+
+multiapi:
+    image: multiapi
+    links:
+        - mysql

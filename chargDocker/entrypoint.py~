@@ -1,0 +1,24 @@
+from os import getenv
+import sys, time
+from sh import sed
+
+if getenv("PAYPAL_CLIENT_ID") is None:
+    sys.exit()
+    
+if getenv("PAYPAL_CLIENT_SECRET") is None:
+    sys.exit()
+
+# Change the paypal credentials
+sed("-i", 's/PAYPAL_CLIENT_ID = \'[\w-]*\'/PAYPAL_CLIENT_ID = getenv\(\'PAYPAL_CLIENT_ID\'\)/g', "./wstore/charging_engine/payment_client/paypal_client.py")
+
+sed("-i", 's/PAYPAL_CLIENT_SECRET = \'[\w-]*\'/PAYPAL_CLIENT_SECRET = getenv\(\'PAYPAL_CLIENT_SECRET\'\)/g', "./wstore/charging_engine/payment_client/paypal_client.py")
+
+sed("-i", 's/from os import path/from os import sh, getenv/g', "./settings.py") 
+
+sed("-i", 's/WSTOREMAIL = \'\<email\>\'/getenv\(\'WSTOREMAIL\', \<email\>\)/g', "./settings.py")
+
+RUN sed -i 's/PAYMENT_METHOD = None/ PAYMENT_METHOD = paypal/g' ./settings.py
+
+RUN ./manage.py createsite external http://127.0.0.1:8000 
+
+RUN ./manage.py createsite internal http://127.0.0.1:8004
