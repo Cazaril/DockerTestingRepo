@@ -3,7 +3,11 @@ FROM glassfish
 RUN apt-get update && apt-get install -y python2.7 python-pip git maven mysql-client
 
 # Download the mysql connector and place it in the proper directory
-RUN curl http://repo1.maven.org/maven2/mysql/mysql-connector-java/5.1.34/mysql-connector-java-5.1.34.jar -o glassfish/lib/mysql-connector-java-5.1.34.jar
+RUN wget http://dev.mysql.com/get/Downloads/Connector-J/mysql-connector-java-5.1.39.tar.gz
+
+RUN tar -xvf mysql-connector-java-5.1.39.tar.gz
+
+RUN cp ./mysql-connector-java-5.1.39/mysql-connector-java-5.1.39-bin.jar glassfish/domains/domain1/lib
 
 RUN mkdir wars
 
