@@ -21,5 +21,7 @@ RUN npm install
 RUN cp config.js.template config.js
 
 COPY ./entrypoint.py /
+COPY ./entrypoint.sh /
 
-ENTRYPOINT ["/entrypoint.py"]
+
+ENTRYPOINT ["/entrypoint.sh"]

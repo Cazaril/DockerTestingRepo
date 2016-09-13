@@ -1,12 +1,11 @@
 #!/usr/bin/env python
-from sh import sed
 from os import getenv, system
 import sys
 
 if getenv("OAUTH2_CLIENT_ID") is None:
     print("environment variable OAUTH2_CLIENT_ID not set")
     sys.exit()
-    
+
 if getenv("OAUTH2_CLIENT_SECRET") is None:
     print("environment variable OAUTH2_CLIENT_SECRET not set")
     sys.exit()
@@ -62,7 +61,7 @@ port = {'matchport': "config.port = 80;",
 prefix = {'matchprefix': "config.proxyPrefix = '/proxy';",
           'prefix': 'config.proxyPrefix = ""'}
 app = {'matchapp': "config.appHost = '';",
-          'port': 'config.appHost = "127.0.0.1"'}
+       'port': 'config.appHost = "127.0.0.1"'}
 
 text = ""
 with open("./config.js") as f:
@@ -79,9 +78,12 @@ print(getenv("OAUTH2_CLIENT_ID"))
 text = text.replace(port.get('matchport'), port.get('port'))
 text = text.replace(prefix.get('matchprefix'), prefix.get('prefix'))
 text = text.replace(app.get('matchapp'), app.get('port'))
-text = text.replace("'clientSecret': '--client-secret--',", "'clientSecret': '{}',".format(getenv("OAUTH2_CLIENT_SECRET")))
-text = text.replace("'clientID': '--client-id--',", "'clientID': '{}',".format(getenv("OAUTH2_CLIENT_ID")))
-text = text.replace("'callbackURL': '--callback-url--',", "'callbackURL': 'http://{}:{}/auth/fiware/callback',".format(getenv("BIZ_ECOSYS_HOST"), getenv("BIZ_ECOSYS_PORT")))
+text = text.replace("'clientSecret': '--client-secret--',",
+                    "'clientSecret': '{}',".format(getenv("OAUTH2_CLIENT_SECRET")))
+text = text.replace("'clientID': '--client-id--',",
+                    "'clientID': '{}',".format(getenv("OAUTH2_CLIENT_ID")))
+text = text.replace("'callbackURL': '--callback-url--',",
+                    "'callbackURL': 'http://{}:{}/auth/fiware/callback',".format(getenv("BIZ_ECOSYS_HOST"), getenv("BIZ_ECOSYS_PORT")))
 
 print(text)
 with open("./config.js", "w+") as f:
@@ -89,7 +91,4 @@ with open("./config.js", "w+") as f:
     print("ESTO ES EL FICHERO")
     print(f.read())
 
-    
-system("service mongodb start")
-
-system("/business-ecosystem-logic-proxy/node-v4.5.0-linux-x64/bin/node server.js")
+# system("/business-ecosystem-logic-proxy/node-v4.5.0-linux-x64/bin/node server.js")
