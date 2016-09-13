@@ -16,10 +16,11 @@ RUN ./python-dep-install.sh
 
 WORKDIR src
 
-RUN mongodb start &
+RUN mkdir -p /data/db/
 
 COPY ./entrypoint.py /
+COPY ./entrypoint.sh /
 
 EXPOSE 8004
 
-ENTRYPOINT ["/entrypoint.py"]
+ENTRYPOINT ["/entrypoint.sh"]

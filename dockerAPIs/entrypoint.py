@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # Credits of this code to @Rock_Neurotiko
 from sh import asadmin, cd
-import sys
 
 DBUSER = "root"
 DBPWD = "toor"
@@ -51,6 +50,7 @@ APIS = [{"url": "https://github.com/FIWARE-TMForum/DSPRODUCTCATALOG2.git",
          "name": "usage",
          "resourcename": "jdbc/usagedbv2"}]
 
+
 def pool(name, user, pwd, url):
     asadmin("create-jdbc-connection-pool",
             "--restype",
@@ -61,22 +61,28 @@ def pool(name, user, pwd, url):
             "user={}:password={}:URL={}".format(user, pwd, url.replace(":", "\:")),
             name)
 
+
 # asadmin create-jdbc-resource --connectionpoolid <poolname> <jndiname>
 def resource(name, pool):
     asadmin("create-jdbc-resource", "--connectionpoolid", pool, name)
 
+
 def generate_mysql_url(db):
     return "jdbc:mysql://{}:{}/{}".format(DBHOST, DBPORT, db)
 
-#if "install" in sys.argv:
+
+# if "install" in sys.argv:
 for api in APIS:
     pool(api.get("bbdd"), DBUSER, DBPWD, generate_mysql_url(api.get("bbdd")))
     url = api.get("url")
-    pool = url.split("/")[-1][:-4]
-    resource(api.get("resourcename"), pool)
-    
+    con = url.split("/")[-1][:-4]
+    resource(api.get("resourcename"), con)
+
+cd("wars")
 for api in APIS:
-    cd(wars)
-    asadmin("deploy", "--force", "false", "--contextroot", api.get('root'), "--name", api.get('root'), api.get('war'))
-#else:
-asadmin("start-domain")
+    try:
+        asadmin("deploy", "--force", "false", "--contextroot", api.get('root'), "--name", api.get('root'), api.get('war'))
+    except:
+        pass
+# else:
+# asadmin("start-domain")

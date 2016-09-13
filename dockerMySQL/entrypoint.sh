@@ -1,0 +1,25 @@
+#!/bin/bash 
+
+set -o monitor
+
+/usr/local/bin/docker-entrypoint.sh mysqld "$@" &
+
+sleep 30
+
+mysql -u root --password=$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE IF NOT EXISTS DSPRODUCTCATALOG2;"
+
+mysql -u root --password=$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE IF NOT EXISTS DSPRODUCTORDERING;"
+
+mysql -u root --password=$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE IF NOT EXISTS DSPRODUCTINVENTORY;"
+
+mysql -u root --password=$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE IF NOT EXISTS DSPARTYMANAGEMENT;"
+
+mysql -u root --password=$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE IF NOT EXISTS DSBILLINGMANAGEMENT;"
+
+mysql -u root --password=$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE IF NOT EXISTS DSCUSTOMER;"
+
+mysql -u root --password=$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE IF NOT EXISTS DSUSAGEMANAGEMENT;"
+
+mysql -u root --password=$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE IF NOT EXISTS RSS;"
+
+fg 1

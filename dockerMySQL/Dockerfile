@@ -6,10 +6,8 @@ RUN pip install sh
 
 ENV MYSQL_ROOT_PASSWORD=toor
 
-COPY ./sql_schema.sql /
-
-COPY ./entrypoint.py /
+COPY ./entrypoint.sh /
 
 EXPOSE 3306
 
-ENTRYPOINT ["/entrypoint.py"]
+ENTRYPOINT ["/entrypoint.sh"]

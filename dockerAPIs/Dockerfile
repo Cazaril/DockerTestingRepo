@@ -1,6 +1,6 @@
 FROM glassfish
 
-RUN apt-get update && apt-get install -y mongodb wkhtmltopdf xvfb gcc libxml2-dev libxslt1-dev zlib1g-dev python-dev python2.7 python-pip git maven
+RUN apt-get update && apt-get install -y wkhtmltopdf xvfb gcc libxml2-dev libxslt1-dev zlib1g-dev python-dev python2.7 python-pip git maven
 
 RUN pip install sh
 
@@ -188,4 +188,6 @@ RUN grep -F "<property name=\"javax.persistence.schema-generation.database.actio
 WORKDIR ../
 
 COPY ./entrypoint.py /
-ENTRYPOINT ["/entrypoint.py"]
+
+COPY ./entrypoint.sh /
+ENTRYPOINT ["/entrypoint.sh"]

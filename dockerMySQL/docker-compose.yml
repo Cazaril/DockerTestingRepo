@@ -1,5 +1,5 @@
 mysql:
-    image: mysql
+    image: tmforummydb
     environment:
         - MYSQL_ROOT_PASSWORD=toor
 
