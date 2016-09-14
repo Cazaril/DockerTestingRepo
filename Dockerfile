@@ -187,7 +187,7 @@ RUN grep -F "<property name=\"javax.persistence.schema-generation.database.actio
 
 WORKDIR ../
 
-COPY ./entrypoint.py /
+#COPY ./entrypoint.py /
 
-COPY ./entrypoint.sh /
-ENTRYPOINT ["/entrypoint.sh"]
+#COPY ./entrypoint.sh /
+#ENTRYPOINT ["/entrypoint.sh"]

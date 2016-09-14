@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from os import getenv, system
+from os import getenv
 import sys
 
 if getenv("OAUTH2_CLIENT_ID") is None:
@@ -61,7 +61,7 @@ port = {'matchport': "config.port = 80;",
 prefix = {'matchprefix': "config.proxyPrefix = '/proxy';",
           'prefix': 'config.proxyPrefix = ""'}
 app = {'matchapp': "config.appHost = '';",
-       'port': 'config.appHost = "127.0.0.1"'}
+       'port': 'config.appHost = "{}"'.format(getenv("API_HOST", "127.0.0.1"))}
 
 text = ""
 with open("./config.js") as f:
@@ -88,7 +88,5 @@ text = text.replace("'callbackURL': '--callback-url--',",
 print(text)
 with open("./config.js", "w+") as f:
     f.write(text)
-    print("ESTO ES EL FICHERO")
-    print(f.read())
 
 # system("/business-ecosystem-logic-proxy/node-v4.5.0-linux-x64/bin/node server.js")

@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # Credits of this code to @Rock_Neurotiko
 from sh import asadmin, cd
+from os import getenv
 
-DBUSER = "root"
-DBPWD = "toor"
-DBHOST = "localhost"
-DBPORT = 3306
+DBUSER = getenv("MYSQL_DBUSR", "root")
+DBPWD = getenv("MYSQL_DBPASS", "toor")
+DBHOST = getenv("MYSQL_DBHOST", "localhost")
+DBPORT = getenv("MYSQL_DBPORT", "3306")
 
 APIS = [{"url": "https://github.com/FIWARE-TMForum/DSPRODUCTCATALOG2.git",
          "bbdd": "DSPRODUCTCATALOG2",

@@ -4,7 +4,18 @@ set -o monitor
 
 /usr/local/bin/docker-entrypoint.sh mysqld "$@" &
 
-sleep 30
+i=1
+
+exec 8<>/dev/tcp/127.0.0.1/3306
+
+while [[ $? -ne 0 && $i -lt 20 ]]; do
+    sleep 2
+    i=$i+1
+    exec 8<>/dev/tcp/127.0.0.1/3306
+done
+
+exec 8>&- # close output connection
+exec 8<&- # close input connection
 
 mysql -u root --password=$MYSQL_ROOT_PASSWORD -e "CREATE DATABASE IF NOT EXISTS DSPRODUCTCATALOG2;"
 

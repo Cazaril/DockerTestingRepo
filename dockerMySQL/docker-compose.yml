@@ -2,8 +2,17 @@ mysql:
     image: tmforummydb
     environment:
         - MYSQL_ROOT_PASSWORD=toor
+    ports:
+        - "3306"
 
 multiapi:
     image: multiapi
     links:
         - mysql
+    ports:
+        - "9999:8080"
+    environment:
+        - MYSQL_DBUSR=root
+        - MYSQL_DBPASS=toor
+        - MYSQL_DBHOST=tmforummydb
+        - MYSQL_DBPORT=3306
